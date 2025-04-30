@@ -4,6 +4,31 @@ This tool scans GitHub repositories for sensitive AI keys (API keys, secrets, et
 
 ---
 
+### 🧑‍💻 Supported AI Models
+
+The tool scans for API keys related to the following AI models and services:
+
+1. OpenAI User Key
+2. OpenAI Project Key
+3. Anthropic Key
+4. Google AI Key
+5. Mistral AI Key
+6. Cohere Key
+7. Stability Key
+8. Replicate Key
+9. Hugging Face Key
+10. ElevenLabs Key
+11. Together AI Key
+12. Groq Key
+13. AI21 Key
+14. Baseten Key
+15. Pinecone Key
+16. Modal Key
+17. RunPod Key
+18. Banana Key
+
+---
+
 ### 🚀 Usage
 
 You can use this tool in two ways:
