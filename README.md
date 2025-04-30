@@ -62,14 +62,17 @@ Example output:
 ### Prerequisites
 
 1. **Install Python**
+   
      You will need Python 3.x installed on your machine.
 
 2. **Install dependencies**
+   
      Install the required Python libraries:
 ```
 pip install -r requirements.txt
 ```
 3. **Set up the GitHub Token**
+   
      You will need a GitHub personal access token to authenticate requests to the GitHub API.
      Set the GITHUB_TOKEN as an environment variable before running the script:
 ```
