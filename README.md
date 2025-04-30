@@ -55,7 +55,7 @@ You can use this tool in two ways:
    - Replace `your_username_or_org` with the GitHub username or organization name you want to scan.
    
    
-   ```bash
+   ```
    docker run -e GITHUB_TOKEN=ghp_your_actual_token 4us71n0/ai-key-scanner --user your_username_or_org --verbose --output json
    ```
 
