@@ -116,5 +116,6 @@ python scanner.py --user your_username --output json --verbose
 
 ## 💡 Notes
 Rate Limiting: GitHub API requests are rate-limited. If you hit the rate limit, you'll need to wait before making more requests. This can be mitigated by using a GitHub Personal Access Token (PAT).
+
 Scanning Commits: This tool scans both commit messages and diffs for potential secret keys, such as API keys from popular services (OpenAI, Google, etc.).
 Privacy: Ensure that you are authorized to scan the repositories, as this tool will expose sensitive information if found.
