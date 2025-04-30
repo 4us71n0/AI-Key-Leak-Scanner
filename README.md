@@ -68,17 +68,21 @@ Example output:
 2. **Install dependencies**
    
      Install the required Python libraries:
+   
 ```
 pip install -r requirements.txt
 ```
+
 3. **Set up the GitHub Token**
    
      You will need a GitHub personal access token to authenticate requests to the GitHub API.
    
      Set the GITHUB_TOKEN as an environment variable before running the script:
+   
 ```
 export GITHUB_TOKEN=ghp_your_actual_token
 ```
+
 ### Running the Script
 
 1. **Scan a GitHub user**
@@ -95,12 +99,17 @@ python scanner.py --org your_org_name --verbose --output text
 ```
 ### Command-line Options
 --org: Scan a GitHub organization.
+
 --user: Scan a specific GitHub user.
+
 --verbose: Enable detailed output logging.
+
 --output: Choose either json or text output format.
+
 --fast: Skip scanning commit diffs, only scan commit messages.
 
 ### Example usage:
+
 ```
 python scanner.py --user your_username --output json --verbose
 ```
