@@ -42,11 +42,19 @@ def get_repos(org_or_user, max_repos=100):
         return []
     return response.json()
 
-def get_commits(owner, repo_name, per_page=100):
-    url = f"https://api.github.com/repos/{owner}/{repo_name}/commits?per_page={per_page}"
+def get_branches(owner, repo_name):
+    url = f"https://api.github.com/repos/{owner}/{repo_name}/branches"
     response = requests.get(url, headers=HEADERS)
     if response.status_code != 200:
-        print(f"[!] Failed to fetch commits for {repo_name}: {response.text}")
+        print(f"[!] Failed to fetch branches for {repo_name}: {response.text}")
+        return []
+    return [branch["name"] for branch in response.json()]
+
+def get_commits(owner, repo_name, branch='main', per_page=100):
+    url = f"https://api.github.com/repos/{owner}/{repo_name}/commits?sha={branch}&per_page={per_page}"
+    response = requests.get(url, headers=HEADERS)
+    if response.status_code != 200:
+        print(f"[!] Failed to fetch commits for {repo_name} on branch {branch}: {response.text}")
         return []
     return response.json()
 
@@ -82,7 +90,7 @@ def scan_commits_for_secrets(commits, repo_name, owner, fast_mode=False, verbose
     return leaks
 
 def main():
-    parser = argparse.ArgumentParser(description="AI Key Leak Scanner for GitHub Repos (No Cloning)")
+    parser = argparse.ArgumentParser(description="AI Key Leak Scanner for GitHub Repos (All Branches, No Cloning)")
     parser.add_argument("--org", type=str, help="GitHub organization name to scan")
     parser.add_argument("--user", type=str, help="GitHub user name to scan")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
@@ -103,19 +111,21 @@ def main():
     for repo in repos:
         name = repo["name"]
         print(f"\n🔍 Scanning repo: {name}")
-        commits = get_commits(target, name)
-        leaks = scan_commits_for_secrets(commits, name, target, fast_mode=args.fast, verbose=args.verbose)
-        if leaks:
-            results.append({"repo": name, "leaks": leaks})
+        branches = get_branches(target, name)
+        for branch in branches:
+            print(f"  🌿 Branch: {branch}")
+            commits = get_commits(target, name, branch)
+            leaks = scan_commits_for_secrets(commits, name, target, fast_mode=args.fast, verbose=args.verbose)
+            if leaks:
+                results.append({"repo": name, "branch": branch, "leaks": leaks})
 
     if args.output == "json":
         print(json.dumps(results, indent=2))
     else:
         for result in results:
-            print(f"\n📁 Repo: {result['repo']}")
+            print(f"\n📁 Repo: {result['repo']} | Branch: {result['branch']}")
             for leak in result["leaks"]:
                 print(leak)
 
 if __name__ == "__main__":
     main()
-
